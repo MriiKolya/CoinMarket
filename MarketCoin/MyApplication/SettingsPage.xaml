@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MarketCoin.Application.SettingsPage"
+             Title="Settings">
+    <StackLayout>
+        <Grid Padding="0,30,0,10" ColumnDefinitions="auto,*,auto">
+            <Label Grid.Column="0"
+                Text="Currencies"></Label>
+            <Picker
+                    HeightRequest="10"
+                    WidthRequest="70"
+                    TextColor="Black"
+                    FontFamily="OpenSansSemibold"
+                    FontSize="Subtitle"
+                    Title="USD"
+                    Margin="0,15,35,0"
+                    HorizontalOptions="End"
+                    BackgroundColor="Transparent"
+            ></Picker>
+
+        </Grid>
+
+    </StackLayout>
+</ContentPage>

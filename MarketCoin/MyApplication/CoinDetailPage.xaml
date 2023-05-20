@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:marketcoin="clr-namespace:MarketCoin"
+             x:Class="MarketCoin.CoinDetailPage"
+             x:Name="DetailPage"
+             
+             >
+
+    <ScrollView>
+    <StackLayout>
+        <Label Margin="20,20,10,0" x:Name="NCoin"></Label>
+        <Label Margin="20,0,10,0" FontFamily="OpenSansSemibold" FontSize="Subtitle" x:Name="PCoin"></Label>
+    </StackLayout>
+
+        
+
+    </ScrollView>
+</ContentPage>

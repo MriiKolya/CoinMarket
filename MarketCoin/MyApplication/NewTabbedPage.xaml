@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:marketcoin="clr-namespace:MarketCoin"
+             xmlns:local="clr-namespace:MarketCoin.API"
+             x:DataType="marketcoin:Coins"
+             x:Class="MarketCoin.NewTabbedPage"
+             >
+
+    <TabbedPage.Resources>
+        <ResourceDictionary>
+        <local:ValueToColorConverter x:Key="ValueToColorConverter" />
+    </ResourceDictionary>
+    </TabbedPage.Resources>
+
+    
+    
+    <ContentPage x:Name="Markets" Title="Markets">
+        <StackLayout>
+            <Grid>
+                <Button
+                    x:Name="index"
+                    BackgroundColor="Transparent"
+                    TextColor="Black"
+                    Padding="5"
+                    FontFamily="OpenSansSemibold"
+                    FontSize="Subtitle" Text="#🔺"
+                    Margin="10,20,0,0"
+                    HorizontalOptions="Start"
+                    Clicked="ReversIndex"
+                ></Button>
+                <Button
+                    x:Name="Price1"
+                    HeightRequest="10"
+                    WidthRequest="90"
+                    BackgroundColor="Transparent"
+                    TextColor="Black"
+                    Padding="5"
+                    FontFamily="OpenSansSemibold"
+                    FontSize="Subtitle"
+                    Text="Price 🔺"
+                    Margin="0,20,0,0"
+                    Clicked="SortPrice"
+                ></Button>
+                <Button
+                    Text="7d %🔺"
+                    x:Name="procent"
+                    HeightRequest="10"
+                    WidthRequest="100"
+                    TextColor="Black"
+                    FontFamily="OpenSansSemibold"
+                    FontSize="Subtitle"
+                    Margin="0,15,20,0"
+                    HorizontalOptions="End"
+                    BackgroundColor="Transparent"
+                    >
+                    
+                </Button>
+            </Grid>
+            <ListView HasUnevenRows="True" x:Name="LvCoins"
+                      BackgroundColor="Transparent"
+                      ItemSelected="LvCoins_ItemSelected"
+                      >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10" RowSpacing="20">
+                                <Frame CornerRadius="15" HasShadow="True" Padding="10" Margin="0"> 
+                                    <StackLayout Spacing="10"  Orientation="Horizontal" >
+                                        <Label Padding="5"
+                                               FontFamily="OpenSansSemibold"
+                                               FontSize="Medium"
+                                               Text="{Binding indexcoin}"
+                                               VerticalOptions="Center">
+                                        </Label>
+                                        <Image Margin="30"
+                                               HeightRequest="45"
+                                               WidthRequest="70"
+                                               Source="{Binding Icon}">
+
+                                        </Image>
+                                        <StackLayout  VerticalOptions="Center">
+                                            <Label
+                                                VerticalOptions="Center"
+                                                Text="{Binding symbol}"
+                                                FontSize = "Title"
+                                                ></Label>
+                                            <Label
+                                                LineBreakMode="TailTruncation"
+                                                VerticalOptions="Center"
+                                                WidthRequest="80"
+                                                FontFamily="OpenSansSemibold"
+                                                Text="{Binding price,StringFormat='{0:F8}'}"
+                                                ></Label>
+                                        </StackLayout>
+                                             <Label
+                                                x:Name="procentSeventD"
+                                                FontSize = "Subtitle"
+                                                Margin="0,0,15,0"
+                                                HorizontalOptions="EndAndExpand"
+                                                VerticalOptions="Center"
+
+                                                TextColor="{Binding percent_change_7d, Converter={StaticResource ValueToColorConverter}}"
+                                                Text="{Binding percent_change_7d, StringFormat='{0:F2} %'}"
+
+                                                 ></Label>
+                                    </StackLayout>
+                                 </Frame>
+                            </Grid>
+
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage>
+
+    <ContentPage x:Name="ContPage" Title="Portfolio">
+        
+    </ContentPage>
+
+
+
+</TabbedPage>
