@@ -2,94 +2,22 @@
 <Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:MarketCoin"
+       x:DataType="local:Markets"
        x:Class="MarketCoin.AppShell"
-       Shell.FlyoutBehavior="Flyout"
-       FlyoutIcon="https://cdn-icons-png.flaticon.com/64/149/149452.png"
+       Shell.BackgroundColor="{DynamicResource ShelBackgrountColor}"
        >
-    <Shell.FlyoutContent>
-        <ScrollView>
-
-            <StackLayout Padding="40,0,10,0">
-            <Grid  Padding="0,30,0,10" ColumnDefinitions="auto,*,auto">
-                <Image
-                    
-                    Grid.Column="0"
-                    HeightRequest="35"
-                    WidthRequest="50"
-                    Source="https://cdn-icons-png.flaticon.com/128/2040/2040504.png"
-                    >
-                </Image>
-                <Label
-                    Grid.Column="1"
-                    Margin="10"
-                    FontSize="20"
-                    Text="Settings"></Label>
-
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="SettingsTapp">
-                    </TapGestureRecognizer>
-                </Grid.GestureRecognizers>
-            </Grid>
-             <Grid Padding="0,30,0,10" ColumnDefinitions="auto,*,auto">
-                <Image
-                    Grid.Column="0"
-                    HeightRequest="40"
-                    WidthRequest="50"
-                    Source="https://cdn-icons-png.flaticon.com/512/157/157933.png"
-                    >
-                </Image>
-                <Label
-                    Grid.Column="1"
-                    Margin="10"
-                    FontSize="20"
-                    Text="About As"></Label>
-            </Grid>
-            <Grid Padding="0,30,0,10" ColumnDefinitions="auto,*,auto">
-                <Image
-                    Grid.Column="0"
-                    HeightRequest="40"
-                    WidthRequest="50"
-                    Source="https://cdn-icons-png.flaticon.com/512/2901/2901194.png"
-                    >
-                </Image>
-                <Label
-                    Grid.Column="1"
-                    Margin="10"
-                    FontSize="20"
-                    Text="Log Out"></Label>
-            </Grid>
-        </StackLayout>
-
-        </ScrollView>
-    </Shell.FlyoutContent>
-    <Shell.ToolbarItems>
-
-        <ToolbarItem IconImageSource="https://cdn-icons-png.flaticon.com/32/622/622669.png"
-                     Priority="1">
-        </ToolbarItem>
-        
-    </Shell.ToolbarItems>
-
     <TabBar>
-        <Tab
+        <Tab 
             Icon="https://cdn-icons-png.flaticon.com/32/6744/6744989.png"
             Title="Markets">
-            <ShellContent ContentTemplate="{DataTemplate local:Markets}">
-
+            <ShellContent Route="TabMarkets" x:Name="ShellContentMarkets" ContentTemplate="{DataTemplate local:Markets}">
             </ShellContent>
-
         </Tab>
-         <Tab
+         <Tab x:Name="TabPagePortfolio"
              Icon="https://cdn-icons-png.flaticon.com/32/5751/5751045.png"
              Title="Portfolio">
-            <ShellContent ContentTemplate="{DataTemplate local:Portfolio}">
-
-
+            <ShellContent  Route="TabPortfolio" x:Name="ShellContentPortfolio" >
             </ShellContent>
         </Tab>
-
     </TabBar>
-    
-
-
 </Shell>

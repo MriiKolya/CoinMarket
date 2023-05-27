@@ -1,12 +1,184 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             xmlns:local="clr-namespace:MarketCoin.API"
+             xmlns:control = "clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
              x:Class="MarketCoin.Portfolio"
-             Title="Portfolio">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Shell.TabBarIsVisible="True"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarBackgroundColor="{DynamicResource BackgroundColor}"
+             BackgroundColor="{DynamicResource ShelBackgrountColor}"
+             >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+        <local:ValueToColorConverter x:Key="ValueToColorConverter" />
+        <local:IsPositive x:Key="IsPositiv"></local:IsPositive>
+    </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+           <StackLayout>
+            <StackLayout>
+                <StackLayout x:Name="AddTransactionPage">
+                     <skia:SKLottieView Source="https://assets3.lottiefiles.com/packages/lf20_lgk0wqey.json"
+                               Margin="0,20"
+                               HeightRequest="400"
+                               WidthRequest="400"
+                               RepeatCount="-1">
+                    </skia:SKLottieView>
+                    <Label  TextColor="{DynamicResource TextColor}"
+                            Text="Your portfolio is empty"
+                            HorizontalOptions="Center"
+                            FontSize="Title"
+                            FontFamily="OpenSansSemibold">
+                    </Label>
+                    <Label
+                            TextColor="{DynamicResource TextColor}"
+                            Margin="50,10,50,0"
+                            Text="Keep track of your profits,lossses and portfolio valuation.Start building your portfoli today."
+                            HorizontalOptions="Center"
+                            LineBreakMode="WordWrap"
+                            VerticalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            FontSize="Medium">
+                    </Label>
+                    <Button Margin="0,30,0,0"
+                            FontFamily="OpenSansSemibold"
+                            FontSize="20"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            HeightRequest="60"
+                            WidthRequest="350"
+                            Text="Add New Transaction"
+                            TextColor="white"
+                            BackgroundColor="#00bbf9"
+                            CornerRadius="15"
+                            Clicked="AddNewTransaction">
+                    </Button>
+                </StackLayout>
+                    <StackLayout x:Name="StackPortfolio">
+                        <Button BackgroundColor="Transparent"
+                                HorizontalOptions="End"
+                                Text="+"
+                                FontSize="40"
+                                Clicked="AddNewTransaction">
+                        </Button>
+                        <Label TextColor="{DynamicResource TextColor}"
+                               Text="Current Balance"
+                               FontSize="22"
+                               Margin="20,10,0,0">
+                        </Label>
+                        <Label TextColor="{DynamicResource TextColor}"
+                               x:Name="AllPriceCoin"
+                               Text="{Binding PriceNow,Mode = TwoWay,StringFormat='{0} $'}"
+                               Margin="20,10,0,0"
+                               FontSize="30">
+                        </Label>
+                        <Label Margin="20,10,0,0"
+                               x:Name="ProfitBalance"
+                               Text="{Binding PriceDifference, Mode=TwoWay,StringFormat='{0} $'}"
+                               TextColor="{Binding PriceDifference, Converter={StaticResource ValueToColorConverter}}"
+                               >
+                        </Label>
+                       <control:SfCircularChart WidthRequest="300" HeightRequest="300" x:Name="CryptoChart">
+                       </control:SfCircularChart>
+                        <Label TextColor="{DynamicResource TextColor}"
+                               Text="Your Assets"
+                               Margin="20,10,0,0"
+                               FontSize="16">
+                        </Label>
+                        <StackLayout>
+                            <ListView HasUnevenRows="True" x:Name="LvCoins"
+                                          Margin="0,0,10,0"
+                                          BackgroundColor="Transparent"
+                                          ItemSelected="LvCoins_ItemSelected"
+                                          SelectionMode="Single"
+                                          HeightRequest="400"
+                                          >
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <SwipeView>
+                                                <SwipeView.RightItems>
+                                                   <SwipeItemView  x:Name="RemoveCoin"
+                                                                   BackgroundColor="Transparent"
+                                                                   Invoked="RemoveCoin_Invoked"
+                                                                   >
+                                                       <StackLayout Margin="10,0,0,0" Padding="10" WidthRequest="100" BackgroundColor="#f34336">
+                                                           <Image VerticalOptions="Center"  HorizontalOptions="Center"
+                                                                 HeightRequest="40" Margin="0,15,0,0" WidthRequest="40"
+                                                                  Source="https://img.icons8.com/glyph-neue/64/FFFFFF/trash.png"></Image>
+                                                       </StackLayout>
+                                                   </SwipeItemView>
+                                                </SwipeView.RightItems>
+                                                <Grid Padding="0,30,0,10" RowDefinitions="20,auto" ColumnDefinitions="auto,*,auto,*,auto">
+                                                        <Image
+                                                            Margin="10,15,0,0"
+                                                            Grid.Column="0"
+                                                            Grid.Row="0"
+                                                            HeightRequest="40"
+                                                            WidthRequest="60"
+                                                            Source="{Binding Icon,TargetNullValue=https://cdn-icons-png.flaticon.com/16/4131/4131757.png}"
+                                                            >
+                                                        </Image>
+                                                        <Label 
+                                                               Grid.Column="1"
+                                                               Grid.Row="0"
+                                                               Text="{Binding name}"
+                                                               FontSize="18"
+                                                               TextColor="{DynamicResource TextColor}">
+                                     
+                                                        </Label>
+                                                        <Label Grid.Column="1"
+                                                               Grid.Row="1"
+                                                               Text="{Binding symbol}"
+                                                               FontSize="14"
+                                                               TextColor="{DynamicResource TextColor}"
+                                                        ></Label>
+                                                        <Label Text="{Binding price,StringFormat='{0:f2} $'}"
+                                                               HorizontalTextAlignment="Center"
+                                                               HorizontalOptions="Center"
+                                                               VerticalTextAlignment="Center"
+                                                               VerticalOptions="Center"
+                                                               Grid.Column="2"
+                                                               Grid.Row="0"
+                                                               TextColor="{DynamicResource TextColor}">
+                                                        </Label>
+                                                        <Label Text="{Binding price_change_percentage_24h,StringFormat='{0:f2} %'}"
+                                                               TextColor="{Binding price_change_percentage_24h, Converter={StaticResource ValueToColorConverter}}"
+                                                               Grid.Column="2"
+                                                               Grid.Row="1"
+                                                               HorizontalTextAlignment="Center"
+                                                               VerticalTextAlignment="Center"
+                                                               HorizontalOptions="CenterAndExpand"
+                                                               VerticalOptions="Center"
+                                                               >
+                                                        </Label>
+                                                        <Label Text="{Binding PriceWithAmount,StringFormat='{0} $'}"
+                                                               Grid.Column="4"
+                                                               Grid.Row="0"
+                                                               TextColor="{DynamicResource TextColor}"
+                                                               >
+                                                        </Label>
+                                                        <Label Text="{Binding amountCoins,StringFormat='{0:f2}'}"
+                                                               TextColor="{DynamicResource BackTextColor}"
+                                                               FontSize="20"
+                                                               Margin="0,0,10,0"
+                                                               Grid.Column="4"
+                                                               HorizontalOptions="End"
+                                                               VerticalOptions="Start"
+                                                               HorizontalTextAlignment="Center"
+                                                               Grid.Row="1"></Label>
+                                                    </Grid>
+                                            </SwipeView>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                        </ListView>
+                     </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+        </StackLayout>
+    </ScrollView>
+
 </ContentPage>

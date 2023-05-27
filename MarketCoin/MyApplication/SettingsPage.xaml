@@ -2,24 +2,196 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MarketCoin.Application.SettingsPage"
-             Title="Settings">
+             Shell.TabBarIsVisible="True"
+             Shell.NavBarIsVisible="True"
+             xmlns:toolkit ="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             BackgroundColor="{DynamicResource ShelBackgrountColor}"
+             >
     <StackLayout>
-        <Grid Padding="0,30,0,10" ColumnDefinitions="auto,*,auto">
-            <Label Grid.Column="0"
-                Text="Currencies"></Label>
-            <Picker
-                    HeightRequest="10"
-                    WidthRequest="70"
-                    TextColor="Black"
-                    FontFamily="OpenSansSemibold"
-                    FontSize="Subtitle"
-                    Title="USD"
-                    Margin="0,15,35,0"
-                    HorizontalOptions="End"
-                    BackgroundColor="Transparent"
-            ></Picker>
+        <StackLayout>
+            <Frame Margin="20,10,20,50"  HeightRequest="90" HasShadow="False" BackgroundColor="{DynamicResource ShelBackgrountColor}">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped">
+                    </TapGestureRecognizer>
+                </Frame.GestureRecognizers>
+                <Grid ColumnDefinitions="auto,auto">
+                    <Frame Margin="0,0,30,0" CornerRadius="30"
+                           BackgroundColor="Transparent"
+                           HeightRequest="80"
+                           WidthRequest="80"
+                           HasShadow="False"
+                           IsClippedToBounds="True"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Grid.Column="0">
+                        <Image 
+                               HeightRequest="80"
+                               WidthRequest="80"
+                               Margin="-20"
+                               Aspect="AspectFill"
+                               Source="{Binding ImageUser ,TargetNullValue = https://cdn-icons-png.flaticon.com/512/149/149452.png}"
+                            >
+                             <Image.Behaviors>
+                                  <toolkit:IconTintColorBehavior  x:Name="ColorAvatar">
+                                  </toolkit:IconTintColorBehavior>
+                             </Image.Behaviors>
+                        </Image>
+                     </Frame>
+                    <Label IsVisible="false"
+                           x:Name="WelcomeUser"
+                           TextColor="{DynamicResource TextColor}"
+                           Grid.Column="1">
+                    </Label>
+                    <Frame BackgroundColor="{DynamicResource FrameCrypto}"
+                           Padding="0"
+                           CornerRadius="15"
+                           Grid.Column="1"
+                           IsVisible="true"
+                           x:Name="RegisterOrLoginPage"
+                           HeightRequest="45"
+                           WidthRequest="150">
+                        <Label TextColor="{DynamicResource TextColor }"
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center"
+                               FontSize="16"
+                               Text="Login / Register"></Label>
+                    </Frame>
+                </Grid>
+            </Frame>
 
-        </Grid>
-
+        </StackLayout>
+<!--Test Currencies-->
+        <!--<Frame
+               BackgroundColor="{DynamicResource BackgroundColor}"
+               CornerRadius="15"
+               HeightRequest="80"
+               Margin="15,10,15,0"
+               HasShadow="True">
+            <Grid ColumnDefinitions="auto,*,auto">
+                <Label  FontFamily="OpenSansSemibold"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        Grid.Column="0"
+                        TextColor="{DynamicResource TextColor}"
+                        FontSize="20"
+                        Text="Currencies"></Label>
+                <Picker
+                        Title="Select a currency"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        Grid.Column="2"                    
+                        SelectedIndex="1"
+                        x:Name="combobox"
+                        HeightRequest="35"
+                        WidthRequest="200"
+                        TextColor="{DynamicResource TextColor}"
+                        FontFamily="OpenSansSemibold"
+                        FontSize="Subtitle"
+                        
+                        BackgroundColor="Transparent"
+                        HorizontalOptions="End"
+                ></Picker>
+            </Grid>
+        </Frame>-->
+<!--Test Currencies-->
+        <Frame
+               CornerRadius="15"
+               BackgroundColor="{DynamicResource BackgroundColor}"
+               HeightRequest="80"
+               Margin="15,10,15,0"
+               >
+            <Grid ColumnDefinitions="auto,*,auto">
+                <Label  HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        FontFamily="OpenSansSemibold"
+                        Grid.Column="0"
+                        FontSize="20"
+                        TextColor="{DynamicResource TextColor}"
+                        Text="Dark Mode">
+                </Label>
+                 <Switch
+                        Toggled="SwitchTheme_Toggled"
+                        x:Name="SwitchTheme"
+                        OnColor="#576CBC"
+                        Margin="20,0,40,0"
+                        HeightRequest="30"
+                        WidthRequest="30"
+                        BackgroundColor="Transparent"
+                        Grid.Column="3">
+                </Switch>
+            </Grid>
+        </Frame>
+        <Frame
+               x:Name="LogOut"
+               IsVisible="false"
+               CornerRadius="15"
+               BackgroundColor="{DynamicResource BackgroundColor}"
+               HeightRequest="80"
+               Margin="15,10,15,0"
+               >
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="ClickedLogOut"></TapGestureRecognizer>
+            </Frame.GestureRecognizers>
+            <Grid ColumnDefinitions="auto,*,auto">
+                <Label  HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        FontFamily="OpenSansSemibold"
+                        Grid.Column="0"
+                        FontSize="20"
+                        TextColor="{DynamicResource TextColor}"
+                        Text="Log Out">
+                </Label>
+                 <Image
+                        Loaded="Image_Loaded"
+                        VerticalOptions="Center"
+                        HorizontalOptions="EndAndExpand"
+                        Source="https://cdn-icons-png.flaticon.com/512/1828/1828479.png"
+                        HeightRequest="35"
+                        WidthRequest="35"
+                        Margin="0,0,10,0"
+                        BackgroundColor="Transparent"
+                        Grid.Column="3">
+                     <Image.Behaviors>
+                         <toolkit:IconTintColorBehavior x:Name="LogOutImage">
+                         </toolkit:IconTintColorBehavior>
+                     </Image.Behaviors>
+                </Image>
+            </Grid>
+        </Frame>
+        <Frame
+               CornerRadius="15"
+               BackgroundColor="{DynamicResource BackgroundColor}"
+               HeightRequest="80"
+               Margin="15,10,15,0"
+               >
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapAboutUs"></TapGestureRecognizer>
+            </Frame.GestureRecognizers>
+            <Grid ColumnDefinitions="auto,*,auto">
+                <Label  HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        FontFamily="OpenSansSemibold"
+                        Grid.Column="0"
+                        FontSize="20"
+                        TextColor="{DynamicResource TextColor}"
+                        Text="About Us">
+                </Label>
+                 <Image
+                        VerticalOptions="Center"
+                        HorizontalOptions="EndAndExpand"
+                        Source="https://cdn-icons-png.flaticon.com/512/992/992686.png"
+                        HeightRequest="45"
+                        WidthRequest="45"
+                        Margin="0,0,10,0"
+                        BackgroundColor="Transparent"
+                        Grid.Column="3">
+                     <Image.Behaviors>
+                         <toolkit:IconTintColorBehavior x:Name="AboutUsImage">
+                         </toolkit:IconTintColorBehavior>
+                     </Image.Behaviors>
+                </Image>
+            </Grid>
+        </Frame>
+       
     </StackLayout>
 </ContentPage>

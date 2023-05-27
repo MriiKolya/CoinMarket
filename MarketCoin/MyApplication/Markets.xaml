@@ -3,53 +3,132 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MarketCoin.Markets"
              xmlns:local="clr-namespace:MarketCoin.API"
+             BackgroundColor="{DynamicResource BackgroundColor}"
+             xmlns:toolkit ="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Shell.NavBarIsVisible="False"
              >
 
     <ContentPage.Resources>
         <ResourceDictionary>
         <local:ValueToColorConverter x:Key="ValueToColorConverter" />
+            <local:ProcentConverter x:Key="Procent"/>
+        <local:NumberToShortStringConverter x:Key="Convert"></local:NumberToShortStringConverter>
     </ResourceDictionary>
     </ContentPage.Resources>
 
-        <StackLayout>
+
+     <StackLayout >
+            <Grid Margin="10,10,10,0" RowDefinitions="*,auto" ColumnDefinitions="auto,*,auto">
+               <ImageButton
+                    Grid.Column="3"
+                    Source="https://cdn-icons-png.flaticon.com/32/622/622669.png"
+                    HeightRequest="30"
+                    WidthRequest="40"
+                    Clicked="ToolbarItem_Clicked">
+                    <ImageButton.Behaviors>
+                        <toolkit:IconTintColorBehavior x:Name="ColorImageSearch">
+                        </toolkit:IconTintColorBehavior>
+                    </ImageButton.Behaviors>
+                </ImageButton>
+                <CarouselView
+                    VerticalScrollBarVisibility="Never"
+                    HeightRequest="50"
+                    WidthRequest="125"
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    x:Name="Carouse">
+
+                <CarouselView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" />
+                </CarouselView.ItemsLayout>
+
+                <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Label
+                            TextColor="{DynamicResource TextColor}"
+                            Text="{Binding Key}"
+                            FontSize="16"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center"
+                            />
+                        <Label TextColor="{DynamicResource TextColor}"
+                               Text="{Binding Value,StringFormat='{0:f2}',Converter={StaticResource Convert}}"
+                               FontSize="14"
+                               HorizontalOptions="CenterAndExpand"
+                               WidthRequest="100"
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center"
+                               LineBreakMode="TailTruncation"/>
+                    </StackLayout>
+                </DataTemplate>
+                </CarouselView.ItemTemplate>
+                </CarouselView>
+
+                <Frame  CornerRadius="30"
+                        BackgroundColor="Transparent"
+                        HeightRequest="45"
+                        HasShadow="False"
+                        WidthRequest="50"
+                        IsClippedToBounds="True"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        Grid.Column="0"
+                        Grid.Row="0">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="MenuTapped"></TapGestureRecognizer>
+                    </Frame.GestureRecognizers>
+                        <Image 
+                               HeightRequest="35"
+                               WidthRequest="35"
+                               Margin="-20"
+                               Aspect="AspectFill"
+                               Source="https://cdn-icons-png.flaticon.com/512/149/149452.png">
+                             <Image.Behaviors>
+                                  <toolkit:IconTintColorBehavior x:Name="ColorImageMenu">
+                                  </toolkit:IconTintColorBehavior>
+                             </Image.Behaviors>
+                        </Image>
+               </Frame>
+            </Grid>
             <Grid>
                 <Button
                     x:Name="index"
                     BackgroundColor="Transparent"
-                    TextColor="Black"
                     Padding="5"
                     FontFamily="OpenSansSemibold"
                     FontSize="Subtitle" Text="#🔺"
                     Margin="10,20,0,0"
                     HorizontalOptions="Start"
-                    Clicked="index_Clicked"
+                    TextColor="{DynamicResource TextColor}"
+                    Clicked="ReversList"
                 ></Button>
                 <Button
                     x:Name="Price1"
                     HeightRequest="10"
-                    WidthRequest="90"
+                    WidthRequest="180"
                     BackgroundColor="Transparent"
-                    TextColor="Black"
+                    TextColor="{DynamicResource TextColor}"
                     Padding="5"
                     FontFamily="OpenSansSemibold"
                     FontSize="Subtitle"
-                    Text="Price 🔺"
-                    Margin="0,20,0,0"
-                    Clicked="Price1_Clicked"
+                    Margin="0,20,5,0"
+                    Clicked="SortPrice"
                 ></Button>
                 <Button
-                    Text="7d %🔺"
+                    Text="24h %🔺"
                     x:Name="procent"
                     HeightRequest="10"
-                    WidthRequest="100"
-                    TextColor="Black"
+                    WidthRequest="108"
+                    TextColor="{DynamicResource TextColor}"
                     FontFamily="OpenSansSemibold"
                     FontSize="Subtitle"
-                    Margin="0,15,20,0"
+                    Margin="0,15,10,0"
                     HorizontalOptions="End"
                     BackgroundColor="Transparent"
+                    Clicked="procent_Clicked"
                     >
-                    
                 </Button>
             </Grid>
             <ListView HasUnevenRows="True" x:Name="LvCoins"
@@ -60,27 +139,30 @@
                     <DataTemplate>
                         <ViewCell>
                             <Grid Padding="10" RowSpacing="20">
-                                <Frame CornerRadius="15" HasShadow="True" Padding="10" Margin="0"> 
+                                <Frame BackgroundColor="{DynamicResource FrameCrypto}" CornerRadius="15" HasShadow="True" Padding="10" Margin="0"> 
                                     <StackLayout Spacing="10"  Orientation="Horizontal" >
-                                        <Label Padding="5"
+                                        <Label TextColor="{DynamicResource TextColor}"
+                                               Padding="5"
                                                FontFamily="OpenSansSemibold"
                                                FontSize="Medium"
                                                Text="{Binding indexcoin}"
                                                VerticalOptions="Center">
                                         </Label>
-                                        <Image Margin="30"
+                                        <Image 
+                                               Margin="30"
                                                HeightRequest="45"
                                                WidthRequest="70"
-                                               Source="{Binding Icon}">
-
+                                               Source="{Binding Icon,TargetNullValue = https://cdn-icons-png.flaticon.com/32/4131/4131757.png}">
                                         </Image>
                                         <StackLayout  VerticalOptions="Center">
                                             <Label
+                                                TextColor="{DynamicResource TextColor}"
                                                 VerticalOptions="Center"
                                                 Text="{Binding symbol}"
                                                 FontSize = "Title"
                                                 ></Label>
                                             <Label
+                                                TextColor="{DynamicResource TextColor}"
                                                 LineBreakMode="TailTruncation"
                                                 VerticalOptions="Center"
                                                 WidthRequest="80"
@@ -94,15 +176,12 @@
                                                 Margin="0,0,15,0"
                                                 HorizontalOptions="EndAndExpand"
                                                 VerticalOptions="Center"
-
-                                                TextColor="{Binding percent_change_7d, Converter={StaticResource ValueToColorConverter}}"
-                                                Text="{Binding percent_change_7d, StringFormat='{0:F2} %'}"
-
+                                                TextColor="{Binding price_change_percentage_24h, Converter={StaticResource ValueToColorConverter}}"
+                                                Text="{Binding price_change_percentage_24h, StringFormat='{0:F2} %'}"
                                                  ></Label>
                                     </StackLayout>
                                  </Frame>
                             </Grid>
-
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

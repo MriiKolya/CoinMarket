@@ -5,6 +5,11 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketCoin", "MarketCoin\MarketCoin.csproj", "{57BD0A94-8405-4EC9-9DA5-4D16AC73C92B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{A4F9E14D-A84B-4DEE-93B7-ACC01EDA2CDA}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,5 +28,32 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
+		$0.TextStylePolicy = $2
+		$2.FileWidth = 80
+		$2.TabsToSpaces = True
+		$2.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $3
+		$3.scope = text/x-csharp
+		$0.TextStylePolicy = $4
+		$4.inheritsSet = null
+		$4.scope = text/x-html
+		$0.TextStylePolicy = $5
+		$5.inheritsSet = null
+		$5.scope = text/x-vs
+		$0.TextStylePolicy = $6
+		$6.inheritsSet = null
+		$6.scope = text/x-json
+		$0.TextStylePolicy = $7
+		$7.inheritsSet = null
+		$7.scope = application/xaml
+		$0.XmlFormattingPolicy = $8
+		$8.inheritsSet = null
+		$8.scope = application/xaml
+		$0.StandardHeader = $9
 	EndGlobalSection
 EndGlobal

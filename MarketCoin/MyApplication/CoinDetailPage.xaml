@@ -1,19 +1,112 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:marketcoin="clr-namespace:MarketCoin"
-             x:Class="MarketCoin.CoinDetailPage"
+             x:Class="MarketCoin.MyApplication.CoinDetailPage"
+             Shell.TabBarIsVisible="False"
+             Shell.NavBarIsVisible="True"
              x:Name="DetailPage"
-             
+             BackgroundColor="{DynamicResource ShelBackgrountColor}"
+             xmlns:local="clr-namespace:MarketCoin.API"
+             xmlns:charts = "clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts" 
              >
-
+    <ContentPage.Resources>
+        <ResourceDictionary>
+        <local:ValueToColorConverter x:Key="ValueToColorConverter" />
+        <local:NumberToShortStringConverter x:Key="Convert"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ScrollView>
-    <StackLayout>
-        <Label Margin="20,20,10,0" x:Name="NCoin"></Label>
-        <Label Margin="20,0,10,0" FontFamily="OpenSansSemibold" FontSize="Subtitle" x:Name="PCoin"></Label>
-    </StackLayout>
-
-        
-
-    </ScrollView>
+        <StackLayout x:Name="MyStack" Margin="0">
+                <StackLayout>
+                    <Label
+                        TextColor="{DynamicResource TextColor}"
+                        Margin="20,30,10,0"
+                        x:Name="NCoin"
+                        FontSize="Body"
+                    ></Label>
+                    <Grid Padding="0,0,0,10" ColumnDefinitions="auto,*,auto">
+                        <Label
+                            TextColor="{DynamicResource TextColor}"
+                            Grid.Column="0"
+                            Margin="20,10,10,0"
+                            FontFamily="OpenSansSemibold"
+                            FontSize="Subtitle"
+                            x:Name="PCoin"
+                         ></Label>
+                        <Frame
+                            x:Name="FrameProcent"
+                            BackgroundColor="{Binding price_change_percentage_24h,Converter={StaticResource ValueToColorConverter}}"
+                            Grid.Column="2"
+                            Margin="0,10,20,0"
+                            CornerRadius="10"
+                            HeightRequest="45" WidthRequest="100"
+                            Padding="10"
+                            >
+                            <Label
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center"
+                               HorizontalOptions="FillAndExpand"
+                               Margin="20,0,10,0"
+                               Text="{Binding price_change_percentage_24h,Converter={StaticResource Convert}}"
+                               FontFamily="OpenSansSemibold"
+                               FontSize="Subtitle"
+                               x:Name="Procent"
+                               TextColor="{DynamicResource SecondaryTextColor}"
+                               WidthRequest="80"
+                             ></Label>
+                        </Frame> 
+                     </Grid>
+                    <charts:SfCartesianChart BackgroundColor="Transparent" x:Name="ChartLine"></charts:SfCartesianChart>
+                    <Label
+                           TextColor="{DynamicResource TextColor}"
+                           FontSize="30"
+                           FontFamily="OpenSansSemibold"
+                           Text="Overview"
+                           Margin="15,25,0,0">
+                    </Label>
+                    <Grid RowDefinitions="20,auto,*" ColumnDefinitions="*,150" Margin="15,15,0,0">
+                        <Label TextColor="{DynamicResource BackTextColor}" Grid.Column="0" Grid.Row="0" FontSize="12" Text="Current Price"></Label>
+                        <Label TextColor="{DynamicResource TextColor}" Grid.Column="0" Grid.Row="1" FontSize="Default" Text="{Binding price,StringFormat='{0} %'}"></Label>
+                        <Label TextColor="{DynamicResource TextColor}" Grid.Column="0" Grid.Row="2" FontSize="Default" x:Name="Price_Change"
+                               Text = "{Binding price_change_24h,StringFormat='{0:C}'}"></Label>
+                        <Label TextColor="{DynamicResource BackTextColor}" Grid.Column="1" Grid.Row="0" FontSize="12" Text="Market Capitalization "></Label>
+                        <Label TextColor="{DynamicResource TextColor}"
+                               Grid.Column="1" Grid.Row="1"
+                               FontSize="Default"
+                               Text = "{Binding market_cap,Converter={StaticResource Convert}}"
+                               x:Name="FormatMarketCap"></Label>
+                        <Label TextColor="{DynamicResource TextColor}"
+                               Grid.Column="1" Grid.Row="2" FontSize="Default"
+                               Text = "{Binding market_cap_change_24h,Converter={StaticResource Convert}}"
+                               x:Name="FormatMarketCapChange"></Label>
+                    </Grid>
+                    <Grid RowDefinitions="25,auto,*" ColumnDefinitions="*,150" Margin="15,25,0,0">
+                         <Label TextColor="{DynamicResource BackTextColor}" Grid.Column="0" Grid.Row="0" FontSize="Default" Text="Rank"></Label>
+                         <Label TextColor="{DynamicResource TextColor}" Grid.Column="0" Grid.Row="1" FontSize="Default" Text="{Binding indexcoin}"></Label>
+                         <Label TextColor="{DynamicResource BackTextColor}" Grid.Column="1" Grid.Row="0" FontSize="Default" Text="Volume"></Label>
+                         <Label TextColor="{DynamicResource TextColor}" Grid.Column="1" Grid.Row="1" FontSize="Default" Text="{Binding total_volume,Converter={StaticResource Convert}}" x:Name="Volume"></Label>
+                    </Grid>
+                     <Label
+                           TextColor="{DynamicResource TextColor}"
+                           FontSize="30"
+                           FontFamily="OpenSansSemibold"
+                           Text="Additional Details"
+                           Margin="15,25,0,0"
+                           ></Label>
+                    <Grid RowDefinitions="20,auto,*" ColumnDefinitions="*,150" Margin="15,15,0,0">
+                        <Label TextColor="{DynamicResource BackTextColor}" Grid.Column="0" Grid.Row="0" FontSize="12" Text="24h Hight"></Label>
+                        <Label TextColor="{DynamicResource TextColor}" Grid.Column="0" Grid.Row="1" FontSize="Default" Text="{Binding high_24h,StringFormat='{0:C}'}"></Label>
+                        <Label TextColor="{DynamicResource BackTextColor}" Grid.Column="1" Grid.Row="0" FontSize="12" Text="24h Low "></Label>
+                        <Label TextColor="{DynamicResource TextColor}" Grid.Column="1" Grid.Row="1" FontSize="Default" Text="{Binding low_24h,StringFormat='{0:C}'}"></Label>
+                    </Grid>
+                    <Grid RowDefinitions="20,auto,*" ColumnDefinitions="*,150" Margin="15,15,0,0">
+                        <Label TextColor="{DynamicResource BackTextColor}" Grid.Column="0" Grid.Row="0" FontSize="12" Text="Max Price"></Label>
+                        <Label TextColor="{DynamicResource TextColor}" Grid.Column="0" Grid.Row="1" FontSize="Default" Text="{Binding ath,StringFormat='{0:C}'}"></Label>
+                        <Label TextColor="{DynamicResource BackTextColor}" Grid.Column="1" Grid.Row="0" FontSize="12" Text="Min Price "></Label>
+                        <Label TextColor="{DynamicResource TextColor}" Grid.Column="1" Grid.Row="1" FontSize="Default" Text="{Binding atl,StringFormat='{0:C}'}"></Label>
+                   
+                    </Grid>
+                </StackLayout>
+       </StackLayout>
+   </ScrollView>
 </ContentPage>

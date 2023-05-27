@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
@@ -30,26 +30,107 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
+	  <CodesignKey>Apple Development: kolyamriy23@gmail.com (UDJKHA663Q)</CodesignKey>
+	  <BuildIpa>true</BuildIpa>
+	  <IpaPackageName>Project</IpaPackageName>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
+	</PropertyGroup>
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash.png" Color="#512BD4" BaseSize="256,256" />
 
 		<!-- Images -->
-		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
-
-		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
-
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="SkiaSharp" Version="2.88.3" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
+		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.3" />
+		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0-preview.61" />
+		<PackageReference Include="Syncfusion.Maui.Core" Version="21.2.6" />
+		<PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
+		<PackageReference Include="Syncfusion.Maui.Charts" Version="21.2.6" />
+		<PackageReference Include="System.Runtime.Caching" Version="8.0.0-preview.3.23174.8" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="5.2.0" />
+		<PackageReference Include="sqlite-net-pcl" Version="1.9.141-beta" />
+		<PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
+		<PackageReference Include="SQLiteNetExtensions.Async" Version="2.1.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5">
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		  <PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.Identity.Client" Version="4.54.1" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="Resources\Icons\" />
+	  <None Remove="Resources\Images\2.1 share.svg" />
+	  <None Remove="Platforms\Android\Resources\values\" />
+	  <None Remove="Resources\Theme\" />
+	  <None Remove="Data\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Resources\Icons\" />
+	  <Folder Include="Platforms\Android\Resources\values\" />
+	  <Folder Include="Resources\Theme\" />
+	  <Folder Include="Data\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Include="..\.editorconfig" />
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Remove="Resources\Styles\Styles.xaml" />
+	  <EmbeddedResource Remove="Resources\Styles\Colors.xaml" />
+	</ItemGroup>
+	<ItemGroup>
+	  <BundleResource Include="Resources\Styles\Styles.xaml">
+	    <SubType>Designer</SubType>
+	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+	  </BundleResource>
+	  <BundleResource Include="Resources\Styles\Colors.xaml">
+	    <SubType>Designer</SubType>
+	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+	  </BundleResource>
+	  <BundleResource Include="Resources\Theme\DarkTheme.xaml">
+	    <SubType>Designer</SubType>
+	  </BundleResource>
+	  <BundleResource Include="Resources\Theme\DarkTheme.xaml.cs">
+	    <DependentUpon>DarkTheme.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </BundleResource>
+	  <BundleResource Include="Resources\Theme\WhiteTheme.xaml">
+	    <SubType>Designer</SubType>
+	  </BundleResource>
+	  <BundleResource Include="Resources\Theme\WhiteTheme.xaml.cs">
+	    <DependentUpon>WhiteTheme.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </BundleResource>
+	</ItemGroup>
+	<ItemGroup>
+	  <MauiXaml Remove="Resources\Theme\DrakTheme.xaml" />
+	  <MauiXaml Remove="Resources\Theme\DarkTheme %28копия%29.xaml" />
+	  <MauiXaml Remove="Resources\Theme\LightTheme.xaml" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Remove="Resources\Theme\DrakTheme.xaml.cs" />
+	  <Compile Remove="Resources\Theme\LightTheme.xaml.cs" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="Data\DatabaseContext.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
+	</ItemGroup>
 </Project>
